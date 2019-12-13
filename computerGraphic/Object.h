@@ -38,13 +38,14 @@ public:
 	~Object();
 	void initialize(const char* s);
 	void render(GLuint shaderProgram);
-	void update(float eTime);
+	virtual void update(float eTime);
 	void setColor(float r, float g, float b);
 	void translate(float x, float y, float z);
 	void rotate(float x, float y, float z);
 	void scale(float x, float y, float z);
 	void setPos(float x, float y, float z);
 	void getPos(float* x, float* y, float* z);
+	void setRotate(float x, float y, float z);
 	void setIdx(int idx);
 	int getIdx();
 	void setType(int type);

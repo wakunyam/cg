@@ -1,15 +1,5 @@
 #include "objectManager.h"
 
-Object* objectManager::getObject(int idx)
-{
-	auto it = objects.begin();
-	for (int i = 0; i < idx; i++)
-	{
-		it++;
-	}
-	return *it;
-}
-
 void objectManager::update(float eTime)
 {
 	for (auto& object : objects)
@@ -39,14 +29,14 @@ void objectManager::doGarbageColletion()
 			if (vSize < FLT_EPSILON)
 			{
 				(*it) = nullptr;
-				it = objects.erase(it);
+				objects.erase(it++);
 				continue;
 			}
 			int hp;
 			if ((*it)->getHp() < FLT_EPSILON)
 			{
 				(*it) = nullptr;
-				it = objects.erase(it);
+				objects.erase(it++);
 				continue;
 			}
 		}

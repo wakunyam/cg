@@ -132,6 +132,13 @@ void Object::getPos(float* x, float* y, float* z)
 	*z = vPos.z;
 }
 
+void Object::setRotate(float x, float y, float z)
+{
+	vRotate.x = x;
+	vRotate.y = y;
+	vRotate.z = z;
+}
+
 void Object::manageHp(int damage)
 {
 	hp -= damage;

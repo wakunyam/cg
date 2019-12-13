@@ -129,7 +129,7 @@
     <ClCompile Include="file.cpp" />
     <ClCompile Include="loadObj.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="nPlayer.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="shaderCompiler.cpp" />
@@ -139,7 +139,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="loadObj.h" />
-    <ClInclude Include="nPlayer.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="shaderCompiler.h" />
@@ -153,7 +153,19 @@
     </Object>
   </ItemGroup>
   <ItemGroup>
+    <None Include="boss.obj1">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="bullet.obj1">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="enemy.obj1">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
     <None Include="fragment.glfs" />
+    <None Include="plane.obj1">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
     <None Include="vertex.glvs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

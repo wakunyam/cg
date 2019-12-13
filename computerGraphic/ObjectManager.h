@@ -26,7 +26,15 @@ public:
 
 		return o->getIdx();
 	}
-	Object* getObject(int idx);
+	template <typename T>
+	T* getObject(int idx) {
+		auto it = objects.begin();
+		for (int i = 0; i < idx; ++i)
+		{
+			++it;
+		}
+		return dynamic_cast<T*>(*it);
+	}
 	void update(float eTime);
 	void render(GLuint shaderProgram);
 	void doGarbageColletion();

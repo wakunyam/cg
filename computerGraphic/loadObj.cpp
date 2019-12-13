@@ -1,25 +1,24 @@
 #include "loadObj.h"
 
-float sumX = 0.0, sumY = 0.0, sumZ = 0.0;
-float aveX, aveY, aveZ;
-float scaleX, scaleY, scaleZ;
-float minX = -20.0, minY = -20.0, minZ = -20.0;
-float maxX = 20.0, maxY = 20.0, maxZ = 20.0;
-float scaleAll;
-
-std::vector< unsigned int > vertexIndices, uvIndices, normalIndices;
-
-std::vector< glm::vec3 > temp_vertices;
-std::vector< glm::vec2 > temp_uvs;
-std::vector< glm::vec3 > temp_normals;
-std::vector< glm::vec3 > outvertex, outnormal;
-std::vector< glm::vec2 > outuv;
-
-int loadObj(const char* filename, std::vector< glm::vec3 > &vertex, std::vector< glm::vec3 > &normal)
+int loadObj(const char* filename, std::vector< glm::vec3 >& vertex, std::vector< glm::vec3 >& normal)
 {
 	FILE* objFile;
 
 	fopen_s(&objFile, filename, "rb");
+
+	float sumX = 0.0, sumY = 0.0, sumZ = 0.0;
+	float aveX, aveY, aveZ;
+	float scaleX, scaleY, scaleZ;
+	float minX = -20.0, minY = -20.0, minZ = -20.0;
+	float maxX = 20.0, maxY = 20.0, maxZ = 20.0;
+	float scaleAll;
+
+	std::vector< unsigned int > vertexIndices, uvIndices, normalIndices;
+	std::vector< glm::vec3 > temp_vertices;
+	std::vector< glm::vec2 > temp_uvs;
+	std::vector< glm::vec3 > temp_normals;
+	std::vector< glm::vec3 > outvertex, outnormal;
+	std::vector< glm::vec2 > outuv;
 
 	if (objFile == NULL) {
 		printf("Impossible to open the file !\n");
@@ -36,7 +35,7 @@ int loadObj(const char* filename, std::vector< glm::vec3 > &vertex, std::vector<
 			glm::vec3 vertex;
 			fscanf(objFile, "%f %f %f\n", &vertex.x, &vertex.y, &vertex.z);
 
-			if (vertex.x < minX) minX = vertex.x;	
+			if (vertex.x < minX) minX = vertex.x;
 			if (vertex.y < minY) minY = vertex.y;
 			if (vertex.z < minZ) minZ = vertex.z;
 			if (vertex.x > maxX) maxX = vertex.x;
@@ -66,7 +65,7 @@ int loadObj(const char* filename, std::vector< glm::vec3 > &vertex, std::vector<
 				printf("File can't be read by our simple parser : ( Try exporting with other options\n");
 				return false;
 			}
-			vertexIndices.push_back(vertexIndex[0]);	
+			vertexIndices.push_back(vertexIndex[0]);
 			vertexIndices.push_back(vertexIndex[1]);
 			vertexIndices.push_back(vertexIndex[2]);
 			uvIndices.push_back(uvIndex[0]);
@@ -114,10 +113,10 @@ int loadObj(const char* filename, std::vector< glm::vec3 > &vertex, std::vector<
 		glm::vec3 vertex = temp_normals[normalIndex - 1];
 		outnormal.push_back(vertex);
 	}
-	
+
 	// 가져올 값 저장
 	vertex = outvertex;
 	normal = outnormal;
 
-	return outvertex.size();
+	return vertex.size();
 }

@@ -10,6 +10,7 @@
 #include "loadObj.h"
 #include "boundingBox.h"
 #include "ObjectManager.h"
+#include "Player.h"
 
 #define HERO_ID 0
 
@@ -69,8 +70,8 @@ int main(int argc, char** argv) {
 	lightPosLocation = glGetUniformLocation(shaderprogram, "lightPos");
 	viewPosLocation = glGetUniformLocation(shaderprogram, "viewPos");
 
-	objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "boss.obj1");
-	auto o = objManager.getObject(HERO_ID);
+	objManager.addObject<Player>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
+	auto o = objManager.getObject<Player>(HERO_ID);
 	o->rotate(-90, 0, 0);
 	
 	glutDisplayFunc(drawScene);
@@ -83,7 +84,7 @@ int main(int argc, char** argv) {
 }
 
 GLvoid drawScene() {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.5f, 0.5f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
@@ -109,11 +110,21 @@ void Keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 's': {
-		int idx = objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, BULLET_TYPE, "plane.obj1");
-		auto o = objManager.getObject(idx);
-		auto player = objManager.getObject(HERO_ID);
-		o->setVel(0.f, 10.f, 0.f);
-		o->setParent(player);
+		auto player = objManager.getObject<Player>(HERO_ID);
+		if (player->canShoot())
+		{
+			player->resetCoolTime();
+			int idx = objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+			auto o = objManager.getObject<Object>(idx);
+			float x, y, z;
+			player->getPos(&x, &y, &z);
+			o->setVel(0.f, 50.f, 0.f);
+			o->setPos(x, y + 5.f, z);
+			o->setParent(player);
+			o->setHp(10);
+			o->rotate(-90, 0, 0);
+			o->scale(0.7f, 0.7f, 0.7f);
+		}
 		break;
 	}
 	case 't':
@@ -127,8 +138,11 @@ void Keyboard(unsigned char key, int x, int y)
 		else
 			drawstyle = GL_LINE;
 		break;
-	case ' ':
+	case ' ': {
+		auto player = objManager.getObject<Player>(HERO_ID);
+		player->evade();
 		break;
+	}
 	case 'q':
 		glutLeaveMainLoop();
 		break;
@@ -211,7 +225,7 @@ void Timerfounction(int value)
 		fx *= fAmount;
 		fy *= fAmount;
 
-		auto o = objManager.getObject(HERO_ID);
+		auto o = objManager.getObject<Player>(HERO_ID);
 		o->addForce(fx, fy, fz, eTime / 1000.f);
 	}
 
