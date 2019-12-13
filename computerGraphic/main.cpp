@@ -69,7 +69,7 @@ int main(int argc, char** argv) {
 	lightPosLocation = glGetUniformLocation(shaderprogram, "lightPos");
 	viewPosLocation = glGetUniformLocation(shaderprogram, "viewPos");
 
-	objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj");
+	objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "boss.obj1");
 	auto o = objManager.getObject(HERO_ID);
 	o->rotate(-90, 0, 0);
 	
@@ -109,7 +109,7 @@ void Keyboard(unsigned char key, int x, int y)
 {
 	switch (key) {
 	case 's': {
-		int idx = objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, BULLET_TYPE, "plane.obj");
+		int idx = objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, BULLET_TYPE, "plane.obj1");
 		auto o = objManager.getObject(idx);
 		auto player = objManager.getObject(HERO_ID);
 		o->setVel(0.f, 10.f, 0.f);
