@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="소스 파일\objfile">
+      <UniqueIdentifier>{3d643ad3-4dfc-47d2-b3aa-27f66eba97a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\camera">
+      <UniqueIdentifier>{ecedd2e3-ad52-4d15-87a5-f30e603b0f84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Object">
+      <UniqueIdentifier>{f3774669-6897-4b47-9f96-a3c21c33a68d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\loadObj">
+      <UniqueIdentifier>{9defcb49-42ff-40a6-9293-902892244cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ObjectManager">
+      <UniqueIdentifier>{97df163f-946d-4e7e-aee8-d69170a29364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\shaderCompiler">
+      <UniqueIdentifier>{52f71858-79d2-4026-96ae-30876a008a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\boundingBox">
+      <UniqueIdentifier>{75977d64-85c6-45cf-8c49-192769b11360}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\file">
+      <UniqueIdentifier>{50d70b82-c82f-48fd-877b-c8b9029c3754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\shaderSource">
+      <UniqueIdentifier>{1c608fdd-64a4-4027-93d9-498e557c2f06}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>소스 파일\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="nPlayer.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="loadObj.cpp">
+      <Filter>소스 파일\loadObj</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>소스 파일\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="shaderCompiler.cpp">
+      <Filter>소스 파일\shaderCompiler</Filter>
+    </ClCompile>
+    <ClCompile Include="boundingBox.cpp">
+      <Filter>소스 파일\boundingBox</Filter>
+    </ClCompile>
+    <ClCompile Include="file.cpp">
+      <Filter>소스 파일\file</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="camera.h">
+      <Filter>소스 파일\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="nPlayer.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="loadObj.h">
+      <Filter>소스 파일\loadObj</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>소스 파일\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="shaderCompiler.h">
+      <Filter>소스 파일\shaderCompiler</Filter>
+    </ClInclude>
+    <ClInclude Include="boundingBox.h">
+      <Filter>소스 파일\boundingBox</Filter>
+    </ClInclude>
+    <ClInclude Include="file.h">
+      <Filter>소스 파일\file</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="enemy.obj">
+      <Filter>소스 파일\objfile</Filter>
+    </Object>
+    <Object Include="plane.obj">
+      <Filter>소스 파일\objfile</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragment.glfs">
+      <Filter>소스 파일\shaderSource</Filter>
+    </None>
+    <None Include="vertex.glvs">
+      <Filter>소스 파일\shaderSource</Filter>
+    </None>
+  </ItemGroup>
+</Project>
