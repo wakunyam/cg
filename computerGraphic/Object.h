@@ -9,7 +9,8 @@
 enum type {
 	PLAYER_TYPE = 0,
 	BULLET_TYPE,
-	ENEMY_TYPE
+	ENEMY_TYPE,
+	STAR_TYPE
 };
 
 class Object

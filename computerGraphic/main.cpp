@@ -12,6 +12,7 @@
 #include "ObjectManager.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Star.h"
 
 #define HERO_ID 0
 
@@ -45,14 +46,15 @@ bool keyLeft = false;
 bool keyDown = false;
 bool keyRight = false;
 
-int enemySpownTimer = 30;
+int enemySpownTimer = 70;
+int starSpownTimer = 30;
 
 int main(int argc, char** argv) {
 
 	// 윈도우 생성
 	glutInit(&argc, argv);                          // glut 초기화
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);	// 디스플레이 모드 설정
-	glutInitWindowPosition(300, 100);				// 윈도우의 위치 지정
+	glutInitWindowPosition(300, 0);				    // 윈도우의 위치 지정
 	glutInitWindowSize(800, 1000);				    // 윈도우의 크기 지정
 	glutCreateWindow("WindowName");                   //윈도우 생성 (윈도우 이름)
 
@@ -87,7 +89,7 @@ int main(int argc, char** argv) {
 }
 
 GLvoid drawScene() {
-	glClearColor(0.5f, 0.5f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
@@ -101,7 +103,6 @@ GLvoid drawScene() {
 		glUniform3fv(viewPosLocation, 1, glm::value_ptr(backCameraPos));
 
 	objManager.render(shaderprogram);
-
 	glutSwapBuffers();  //  화면에 출력
 }
 
@@ -197,7 +198,7 @@ void SpecialKeyUp(int key, int x, int y)
 	}
 }
 
-void Timerfounction(int value) 
+void Timerfounction(int value)
 {
 	int currTime = glutGet(GLUT_ELAPSED_TIME);
 	int eTime = currTime - prevTime;
@@ -236,19 +237,26 @@ void Timerfounction(int value)
 		o->addForce(fx, fy, fz, eTime / 1000.f);
 	}
 
-	enemySpownTimer += 1;
-
+	enemySpownTimer++;
 	if (enemySpownTimer > 100) {
 		enemySpownTimer = 0;
 		int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
 		auto e = objManager.getObject<Enemy>(idx);
-		e->setEnemyStopPos();
+		e->setEnemyLocation();
 	}
+
+	starSpownTimer++;
+	if (starSpownTimer > 50) {
+		starSpownTimer = 0;
+		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "sphere.obj1");
+		auto o = objManager.getObject<Star>(index);
+		o->setStarlocation();
+	}
+
 
 	objManager.update(eTime / 1000.f);
 
 	drawScene();
-
 	objManager.doGarbageColletion();
 
 	glutTimerFunc(33, Timerfounction, 1);	
