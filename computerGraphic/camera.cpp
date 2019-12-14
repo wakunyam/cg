@@ -15,9 +15,9 @@ void cameraSetting(GLuint shaderprogram, bool topView)
 		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 	else {
-		cameraPos = glm::vec3(0, 0, 0 +3.0f);
+		cameraPos = glm::vec3(0, 0 - 300.0f , 0);
 		cameraDirection = glm::vec3(0, 0, 0.0f);
-		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+		cameraUp = glm::vec3(0.0f, 0.0f, 1.0f);
 	}
 
 	view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
@@ -32,7 +32,7 @@ void cameraSetting(GLuint shaderprogram, bool topView)
 		projection = glm::ortho(-400.0f,400.0f, -500.0f, 500.0f, 0.0001f, 10000.0f);
 	}
 	else {
-		projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)1000, 0.1f, 50.0f);
+		projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)1000, 0.1f, 10000.0f);
 	}
 
 	unsigned int projectionLocation = glGetUniformLocation(shaderprogram, "projectionTransform");

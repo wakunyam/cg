@@ -11,6 +11,7 @@
 #include "boundingBox.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "Enemy.h"
 
 #define HERO_ID 0
 
@@ -44,6 +45,8 @@ bool keyLeft = false;
 bool keyDown = false;
 bool keyRight = false;
 
+int enemySpownTimer = 30;
+
 int main(int argc, char** argv) {
 
 	// 윈도우 생성
@@ -73,7 +76,7 @@ int main(int argc, char** argv) {
 	objManager.addObject<Player>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
 	auto o = objManager.getObject<Player>(HERO_ID);
 	o->rotate(-90, 0, 0);
-	
+
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeyDown);
@@ -188,6 +191,10 @@ void SpecialKeyUp(int key, int x, int y)
 	{
 		keyRight = false;
 	}
+	if (key == GLUT_KEY_SHIFT_L)
+	{
+		topView = (topView + 1) % 2;
+	}
 }
 
 void Timerfounction(int value) 
@@ -227,6 +234,15 @@ void Timerfounction(int value)
 
 		auto o = objManager.getObject<Player>(HERO_ID);
 		o->addForce(fx, fy, fz, eTime / 1000.f);
+	}
+
+	enemySpownTimer += 1;
+
+	if (enemySpownTimer > 100) {
+		enemySpownTimer = 0;
+		int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+		auto e = objManager.getObject<Enemy>(idx);
+		e->setEnemyStopPos();
 	}
 
 	objManager.update(eTime / 1000.f);
