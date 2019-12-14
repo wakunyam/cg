@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Star.h"
+#include "Boss.h"
 
 #define HERO_ID 0
 
@@ -49,6 +50,8 @@ bool keyRight = false;
 int enemySpownTimer = 70;
 int starSpownTimer = 30;
 
+bool bossState = false;
+
 int main(int argc, char** argv) {
 
 	// 윈도우 생성
@@ -76,10 +79,10 @@ int main(int argc, char** argv) {
 	viewPosLocation = glGetUniformLocation(shaderprogram, "viewPos");
 
 	objManager.addObject<Player>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
-	objManager.addObject<Enemy>(0, 0, -10, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
 	auto o = objManager.getObject<Player>(HERO_ID);
 
 	o->revolution(-90, 0, 0);
+	o->setPos(0, 0, -20);
 
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
@@ -239,20 +242,24 @@ void Timerfounction(int value)
 		o->addForce(fx, fy, fz, eTime / 1000.f);
 	}
 
-	enemySpownTimer++;
-	if (enemySpownTimer > 100) {
-		enemySpownTimer = 0;
-		int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
-		auto e = objManager.getObject<Enemy>(idx);
-		e->setEnemyLocation();
+	if (currTime < 10000) {
+		enemySpownTimer++;
+		if (enemySpownTimer > 100) {
+			enemySpownTimer = 0;
+			objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+		}
+	}
+	else {
+		if (!bossState) {
+			bossState = true;
+			objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "Boss.obj1");
+		}
 	}
 
 	starSpownTimer++;
 	if (starSpownTimer > 50) {
 		starSpownTimer = 0;
-		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "sphere.obj1");
-		auto o = objManager.getObject<Star>(index);
-		o->setStarlocation();
+		objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "one.obj1");
 	}
 
 

@@ -10,6 +10,7 @@ enum type {
 	PLAYER_TYPE = 0,
 	BULLET_TYPE,
 	ENEMY_TYPE,
+	BOSS_TYPE,
 	STAR_TYPE
 };
 

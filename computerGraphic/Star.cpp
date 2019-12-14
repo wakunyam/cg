@@ -1,7 +1,7 @@
 #include <random>
 #include "Star.h"
 
-void Star::setStarlocation()
+Star::Star()
 {
 	std::random_device rd;
 	std::default_random_engine dre(rd());

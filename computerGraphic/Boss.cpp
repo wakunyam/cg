@@ -1,52 +1,53 @@
-#include "Enemy.h"
-#include <random>
+#include "Boss.h"
 
 #define DEFAULT_SHOOT_COOLTIME 1.f
 
-Enemy::Enemy()
+Boss::Boss()
 {
 	revolution(90.f, 0.f, 0.f);
-	
-	std::random_device rd;
-	std::default_random_engine dre(rd());
-	std::uniform_real_distribution<float> urdX(-35, 35);
-	std::uniform_real_distribution<float> urdY(-25, -5);
 
-	x = urdX(dre);
-	stopY = urdY(dre);
+	x = 0;
+	stopY = -20;
 }
 
-void Enemy::update(float eTime)
+float Boss::getTurn() const
+{
+	return turn;
+}
+
+void Boss::update(float eTime)
 {
 	Object::update(eTime);
 	shootCoolTime -= eTime;
-	
+
 	if (startY < stopY)
 		startY += 10 * eTime;
 	else {
 		x += (traverseDir * 10 * eTime);
-		
+
 		if (x < -35)
 			traverseDir = 1;
 		else if (x > 35)
 			traverseDir = -1;
 	}
 
-	turn += eTime * 2;
+	turn += eTime;
 
 	setPos(x, 0, startY);
 
-	setRotate(0, 0, turn);
+	setRotate(0, turn, 0);
 }
 
-bool Enemy::canShoot()
+
+
+bool Boss::canShoot()
 {
 	if (shootCoolTime < FLT_EPSILON)
 		return true;
 	return false;
 }
 
-void Enemy::resetCoolTime()
+void Boss::resetCoolTime()
 {
 	shootCoolTime = DEFAULT_SHOOT_COOLTIME;
 }

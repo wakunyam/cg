@@ -24,6 +24,26 @@ void objectManager::update(float eTime)
 				enemy->resetCoolTime();
 			}
 		}
+		if (object->getType() == BOSS_TYPE)
+		{
+			auto boss = getObject<Boss>(idx);
+			if (boss->canShoot())
+			{
+				for (int way = 0; way < 360; way += 45) {
+					float x, y, z;
+					boss->getPos(&x, &y, &z);
+					int i = addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+					auto o = getObject<Object>(i);
+					o->setVel(0.f, 30.f, 0.f);
+					o->setPos(0, 0, 0);
+					o->setParent(object);
+					o->setHp(10);
+					o->revolution(90, 0, way);
+					o->scale(0.7f, 0.7f, 0.7f);
+				}
+				boss->resetCoolTime();
+			}
+		}
 		++idx;
 	}
 }

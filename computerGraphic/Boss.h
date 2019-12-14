@@ -1,7 +1,7 @@
 #pragma once
 #include "Object.h"
 
-class Enemy : public Object
+class Boss : public Object
 {
 	float shootCoolTime = 0.f;
 	float turn = 0.f;
@@ -11,9 +11,11 @@ class Enemy : public Object
 	float traverseDir = -1;
 
 public:
-	Enemy();
-	~Enemy() = default;
+	Boss();
+	~Boss() = default;
+	float getTurn() const;
 	void update(float eTime) override;
 	bool canShoot();
 	void resetCoolTime();
 };
+#pragma once

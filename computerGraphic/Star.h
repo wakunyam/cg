@@ -7,6 +7,7 @@ class Star : public Object {
 	float z;
 
 public:
-	void setStarlocation();
+	Star();
+	~Star() = default;
 	void update(float eTime) override;
 };

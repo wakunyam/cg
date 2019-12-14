@@ -75,6 +75,9 @@
     <ClCompile Include="Star.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -107,14 +110,9 @@
     <ClInclude Include="Star.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="enemy.obj">
-      <Filter>소스 파일\objfile</Filter>
-    </Object>
-    <Object Include="plane.obj">
-      <Filter>소스 파일\objfile</Filter>
-    </Object>
+    <ClInclude Include="Boss.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glfs">
@@ -133,6 +131,9 @@
       <Filter>소스 파일\objfile</Filter>
     </None>
     <None Include="bullet.obj1">
+      <Filter>소스 파일\objfile</Filter>
+    </None>
+    <None Include="one.obj1">
       <Filter>소스 파일\objfile</Filter>
     </None>
   </ItemGroup>
