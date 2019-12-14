@@ -72,6 +72,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Star.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -99,6 +102,9 @@
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Star.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
   </ItemGroup>

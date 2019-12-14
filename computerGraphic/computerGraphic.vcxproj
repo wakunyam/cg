@@ -134,6 +134,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="shaderCompiler.cpp" />
+    <ClCompile Include="Star.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boundingBox.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="shaderCompiler.h" />
+    <ClInclude Include="Star.h" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="enemy.obj">

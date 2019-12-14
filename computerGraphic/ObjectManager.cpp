@@ -60,6 +60,18 @@ void objectManager::doGarbageColletion()
 				continue;
 			}
 		}
+		if ((*it)->getType() == STAR_TYPE)
+		{
+			float vx, vy, vz;
+			(*it)->getVel(&vx, &vy, &vz);
+
+			if (vy < -60) {
+				(*it) = nullptr;
+				objects.erase(it++);
+				continue;
+			}
+		}
+
 		++it;
 	}
 }
