@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="boundingBox.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="loadObj.cpp" />
     <ClCompile Include="main.cpp" />
@@ -137,6 +138,7 @@
   <ItemGroup>
     <ClInclude Include="boundingBox.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="loadObj.h" />
     <ClInclude Include="Player.h" />

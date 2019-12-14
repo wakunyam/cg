@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#define DEFAULT_SHOOT_COOLTIME 0.2f
+
 void Player::update(float eTime)
 {
 	Object::update(eTime);
@@ -7,14 +9,13 @@ void Player::update(float eTime)
 	if (evasion)
 	{
 		turn += 360 * eTime;
-		if(turn<360)
-			rotate(0.f, 360 * eTime, 0.f);
-		else
-		{
+		if (turn > 360) {
+			setRotate(0.f, 0.f, 0.f);
 			turn = 0.f;
-			setRotate(-90.f, 0.f, 0.f);
 			evasion = false;
 		}
+		else
+			setRotate(0.f, 0.f, turn);
 	}
 }
 

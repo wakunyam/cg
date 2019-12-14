@@ -17,6 +17,7 @@ class Object
 	glm::vec3 vPos = glm::vec3(0.f, 0.f, 0.f);
 	glm::vec3 vRotate = glm::vec3(0.f, 0.f, 0.f);
 	glm::vec3 vScale = glm::vec3(1.f, 1.f, 1.f);
+	glm::vec3 vRev = glm::vec3(0.f, 0.f, 0.f);
 
 	unsigned int vertexSize;
 	std::vector<glm::vec3> vertex;
@@ -43,6 +44,7 @@ public:
 	void translate(float x, float y, float z);
 	void rotate(float x, float y, float z);
 	void scale(float x, float y, float z);
+	void revolution(float x, float y, float z);
 	void setPos(float x, float y, float z);
 	void getPos(float* x, float* y, float* z);
 	void setRotate(float x, float y, float z);

@@ -11,6 +11,7 @@
 #include "boundingBox.h"
 #include "ObjectManager.h"
 #include "Player.h"
+#include "Enemy.h"
 
 #define HERO_ID 0
 
@@ -71,8 +72,9 @@ int main(int argc, char** argv) {
 	viewPosLocation = glGetUniformLocation(shaderprogram, "viewPos");
 
 	objManager.addObject<Player>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
+	objManager.addObject<Enemy>(0, 0, -10, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
 	auto o = objManager.getObject<Player>(HERO_ID);
-	o->rotate(-90, 0, 0);
+	o->revolution(-90, 0, 0);
 	
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
@@ -119,10 +121,10 @@ void Keyboard(unsigned char key, int x, int y)
 			float x, y, z;
 			player->getPos(&x, &y, &z);
 			o->setVel(0.f, 50.f, 0.f);
-			o->setPos(x, y + 5.f, z);
+			o->setPos(x, y, z + 5.f);
 			o->setParent(player);
 			o->setHp(10);
-			o->rotate(-90, 0, 0);
+			o->revolution(-90, 0, 0);
 			o->scale(0.7f, 0.7f, 0.7f);
 		}
 		break;

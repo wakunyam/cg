@@ -3,6 +3,8 @@
 #include <vector>
 #include <list>
 #include "object.h"
+#include "Enemy.h"
+
 class objectManager
 {
 	std::list<Object*> objects;

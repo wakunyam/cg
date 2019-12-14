@@ -39,7 +39,10 @@ void Object::render(GLuint shaderProgram)
 	glm::mat4 model = glm::mat4(1.f);
 
 	model =
-		glm::translate(model, glm::vec3(vPos.x * 10, vPos.y * 10, vPos.z * 10))
+		glm::rotate(model, glm::radians(vRev.z), glm::vec3(0.f, 0.f, 1.f))
+		* glm::rotate(model, glm::radians(vRev.y), glm::vec3(0.f, 1.f, 0.f))
+		* glm::rotate(model, glm::radians(vRev.x), glm::vec3(1.f, 0.f, 0.f))
+		* glm::translate(model, glm::vec3(vPos.x * 10, vPos.y * 10, vPos.z * 10))
 		* glm::rotate(model, vRotate.z, glm::vec3(0.f, 0.f, 1.f))
 		* glm::rotate(model, vRotate.y, glm::vec3(0.f, 1.f, 0.f))
 		* glm::rotate(model, vRotate.x, glm::vec3(1.f, 0.f, 0.f))
@@ -95,7 +98,7 @@ void Object::update(float eTime)
 		}
 	}
 	vPos.x = vPos.x + velX * eTime;
-	vPos.y = vPos.y + velY * eTime;
+	vPos.z = vPos.z + velY * eTime;
 }
 
 void Object::setColor(float r, float g, float b)
@@ -116,6 +119,11 @@ void Object::rotate(float x, float y, float z)
 void Object::scale(float x, float y, float z)
 {
 	vScale *= glm::vec3(x, y, z);
+}
+
+void Object::revolution(float x, float y, float z)
+{
+	vRev += glm::vec3(x, y, z);
 }
 
 void Object::setPos(float x, float y, float z)
