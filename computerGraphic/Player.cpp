@@ -17,6 +17,17 @@ void Player::update(float eTime)
 		else
 			setRotate(0.f, 0.f, turn);
 	}
+	float x, y, z;
+	getPos(&x, &y, &z);
+	if (x < -37.f)
+		x = -37.f;
+	else if (x > 37.f)
+		x = 37.f;
+	if (z < -47.f)
+		z = -47.f;
+	else if (z > 47.f)
+		z = 47.f;
+	setPos(x, y, z);
 }
 
 bool Player::canShoot()
@@ -37,4 +48,21 @@ void Player::evade()
 	{
 		evasion = true;
 	}
+}
+
+void Player::plusLevel()
+{
+	++level;
+	if (level > 3)
+		level = 3;
+}
+
+void Player::resetLevel()
+{
+	level = 0;
+}
+
+int Player::getLevel()
+{
+	return level;
 }

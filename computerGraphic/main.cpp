@@ -14,8 +14,10 @@
 #include "Enemy.h"
 #include "Star.h"
 #include "Boss.h"
+#include "Item.h"
 
 #define HERO_ID 0
+#define ENEMY_SPAWN_TIME 10.f
 
 GLvoid drawScene();
 GLvoid Reshape(int w, int h);
@@ -39,7 +41,6 @@ glm::vec3 backCameraPos = glm::vec3(0, 0, 0 + 3.0f);
 
 objectManager objManager;
 
-int timeCnt = 70;
 int prevTime = 0;
 
 bool keyUp = false;
@@ -47,10 +48,10 @@ bool keyLeft = false;
 bool keyDown = false;
 bool keyRight = false;
 
-int enemySpownTimer = 70;
-int starSpownTimer = 30;
+float enemySpawnTimer = ENEMY_SPAWN_TIME;
 
 bool bossState = false;
+float bossTimer = 10.f;
 
 int main(int argc, char** argv) {
 
@@ -84,6 +85,11 @@ int main(int argc, char** argv) {
 	o->revolution(-90, 0, 0);
 	o->setPos(0, 0, -20);
 
+	for (int i = 0; i < 50; i++) {
+		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "two.obj1");
+		auto o = objManager.getObject<Star>(index);
+	}
+	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeyDown);
@@ -123,16 +129,38 @@ void Keyboard(unsigned char key, int x, int y)
 		if (player->canShoot())
 		{
 			player->resetCoolTime();
-			int idx = objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
-			auto o = objManager.getObject<Object>(idx);
 			float x, y, z;
 			player->getPos(&x, &y, &z);
-			o->setVel(0.f, 50.f, 0.f);
-			o->setPos(x, y, z + 5.f);
-			o->setParent(player);
-			o->setHp(10);
-			o->revolution(-90, 0, 0);
-			o->scale(0.7f, 0.7f, 0.7f);
+			if (player->getLevel() >= 3)
+			{
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+				auto o = objManager.getObject<Object>(idx);
+				o->setVel(0.f, 50.f, 0.f);
+				o->setPos(x + 2.f, y, z + 3.f);
+				o->setParent(player);
+				o->setHp(10);
+				o->revolution(-90, 0, 0);
+			}
+			if (player->getLevel() >= 2)
+			{
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+				auto o = objManager.getObject<Object>(idx);
+				o->setVel(0.f, 50.f, 0.f);
+				o->setPos(x - 2.f, y, z + 3.f);
+				o->setParent(player);
+				o->setHp(10);
+				o->revolution(-90, 0, 0);
+			}
+			if (player->getLevel() >= 1)
+			{
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+				auto o = objManager.getObject<Object>(idx);
+				o->setVel(0.f, 50.f, 0.f);
+				o->setPos(x, y, z + 5.f);
+				o->setParent(player);
+				o->setHp(10);
+				o->revolution(-90, 0, 0);
+			}
 		}
 		break;
 	}
@@ -242,26 +270,44 @@ void Timerfounction(int value)
 		o->addForce(fx, fy, fz, eTime / 1000.f);
 	}
 
-	if (currTime < 10000) {
-		enemySpownTimer++;
-		if (enemySpownTimer > 100) {
-			enemySpownTimer = 0;
-			objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+	bossTimer -= eTime / 1000.f;
+	if (bossTimer > FLT_EPSILON)
+	{
+		enemySpawnTimer -= eTime / 1000.f;
+		if (enemySpawnTimer < FLT_EPSILON) {
+			enemySpawnTimer = ENEMY_SPAWN_TIME;
+			int enemyType = rand() % 3;
+			switch (enemyType)
+			{
+			case 0: {
+				int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+				auto e = objManager.getObject<Enemy>(idx);
+				e->setEnemyType(0);
+				break;
+			}
+			case 1: {
+				int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+				auto e = objManager.getObject<Enemy>(idx);
+				e->setEnemyType(1);
+				break;
+			}
+			case 2: {
+				int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+				auto e = objManager.getObject<Enemy>(idx);
+				e->setEnemyType(2);
+				e->setDefaultCoolTime(3.f);
+				break;
+			}
+			}
 		}
 	}
-	else {
+	else
+	{
 		if (!bossState) {
 			bossState = true;
 			objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "Boss.obj1");
 		}
 	}
-
-	starSpownTimer++;
-	if (starSpownTimer > 50) {
-		starSpownTimer = 0;
-		objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "one.obj1");
-	}
-
 
 	objManager.update(eTime / 1000.f);
 

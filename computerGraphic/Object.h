@@ -11,7 +11,8 @@ enum type {
 	BULLET_TYPE,
 	ENEMY_TYPE,
 	BOSS_TYPE,
-	STAR_TYPE
+	STAR_TYPE,
+	ITEM_TYPE
 };
 
 class Object
@@ -35,6 +36,7 @@ class Object
 	int type;
 	float velX, velY, velZ;
 	float mass;
+	float fric = 0.7f;
 	Object* parent = NULL;
 public:
 	Object();
@@ -59,6 +61,7 @@ public:
 	bool isAncestor(Object* obj);
 	void setVel(float x, float y, float z);
 	void getVel(float* x, float* y, float* z);
+	void setFric(float fric);
 	void setHp(int hp);
 	int getHp();
 	void manageHp(int damage);

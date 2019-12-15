@@ -22,13 +22,13 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{3C745602-E8BF-40C8-90E7-E9DC19665A98}</ProjectGuid>
     <RootNamespace>computerGraphic</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -129,6 +129,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="loadObj.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -143,12 +144,21 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="loadObj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="shaderCompiler.h" />
     <ClInclude Include="Star.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="one.obj1">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="two.obj1">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="boss.obj1">
@@ -167,6 +177,7 @@
     <None Include="plane.obj1">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="sphere.obj1" />
     <None Include="vertex.glvs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

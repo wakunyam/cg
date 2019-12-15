@@ -78,6 +78,9 @@
     <ClCompile Include="Boss.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -113,6 +116,9 @@
     <ClInclude Include="Boss.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>소스 파일\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glfs">
@@ -133,8 +139,15 @@
     <None Include="bullet.obj1">
       <Filter>소스 파일\objfile</Filter>
     </None>
+    <None Include="sphere.obj1">
+      <Filter>소스 파일\objfile</Filter>
+    </None>
     <None Include="one.obj1">
       <Filter>소스 파일\objfile</Filter>
     </None>
+    <None Include="two.obj1">
+      <Filter>소스 파일\objfile</Filter>
+    </None>
+    <None Include="one.obj1" />
   </ItemGroup>
 </Project>
