@@ -13,8 +13,10 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Star.h"
+#include "Item.h"
 
 #define HERO_ID 0
+#define ENEMY_SPAWN_TIME 10.f
 
 GLvoid drawScene();
 GLvoid Reshape(int w, int h);
@@ -46,8 +48,7 @@ bool keyLeft = false;
 bool keyDown = false;
 bool keyRight = false;
 
-int enemySpownTimer = 70;
-int starSpownTimer = 30;
+float enemySpawnTimer = ENEMY_SPAWN_TIME;
 
 int main(int argc, char** argv) {
 
@@ -76,11 +77,16 @@ int main(int argc, char** argv) {
 	viewPosLocation = glGetUniformLocation(shaderprogram, "viewPos");
 
 	objManager.addObject<Player>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
-	objManager.addObject<Enemy>(0, 0, -10, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
 	auto o = objManager.getObject<Player>(HERO_ID);
 
 	o->revolution(-90, 0, 0);
 
+	for (int i = 0; i < 50; i++) {
+		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "two.obj1");
+		auto o = objManager.getObject<Star>(index);
+		o->setStarlocation();
+	}
+	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeyDown);
@@ -120,16 +126,38 @@ void Keyboard(unsigned char key, int x, int y)
 		if (player->canShoot())
 		{
 			player->resetCoolTime();
-			int idx = objManager.addObject<Object>(0, 0, 0, 1, 1, 1, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
-			auto o = objManager.getObject<Object>(idx);
 			float x, y, z;
 			player->getPos(&x, &y, &z);
-			o->setVel(0.f, 50.f, 0.f);
-			o->setPos(x, y, z + 5.f);
-			o->setParent(player);
-			o->setHp(10);
-			o->revolution(-90, 0, 0);
-			o->scale(0.7f, 0.7f, 0.7f);
+			if (player->getLevel() >= 3)
+			{
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+				auto o = objManager.getObject<Object>(idx);
+				o->setVel(0.f, 50.f, 0.f);
+				o->setPos(x + 2.f, y, z + 3.f);
+				o->setParent(player);
+				o->setHp(10);
+				o->revolution(-90, 0, 0);
+			}
+			if (player->getLevel() >= 2)
+			{
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+				auto o = objManager.getObject<Object>(idx);
+				o->setVel(0.f, 50.f, 0.f);
+				o->setPos(x - 2.f, y, z + 3.f);
+				o->setParent(player);
+				o->setHp(10);
+				o->revolution(-90, 0, 0);
+			}
+			if (player->getLevel() >= 1)
+			{
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
+				auto o = objManager.getObject<Object>(idx);
+				o->setVel(0.f, 50.f, 0.f);
+				o->setPos(x, y, z + 5.f);
+				o->setParent(player);
+				o->setHp(10);
+				o->revolution(-90, 0, 0);
+			}
 		}
 		break;
 	}
@@ -239,22 +267,36 @@ void Timerfounction(int value)
 		o->addForce(fx, fy, fz, eTime / 1000.f);
 	}
 
-	enemySpownTimer++;
-	if (enemySpownTimer > 100) {
-		enemySpownTimer = 0;
-		int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
-		auto e = objManager.getObject<Enemy>(idx);
-		e->setEnemyLocation();
+	enemySpawnTimer -= eTime / 1000.f;
+	if (enemySpawnTimer < FLT_EPSILON) {
+		enemySpawnTimer = ENEMY_SPAWN_TIME;
+		int enemyType = rand() % 3;
+		switch (enemyType)
+		{
+		case 0: {
+			int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+			auto e = objManager.getObject<Enemy>(idx);
+			e->setEnemyLocation();
+			e->setEnemyType(0);
+			break;
+		}
+		case 1: {
+			int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+			auto e = objManager.getObject<Enemy>(idx);
+			e->setEnemyLocation();
+			e->setEnemyType(1);
+			break;
+		}
+		case 2: {
+			int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
+			auto e = objManager.getObject<Enemy>(idx);
+			e->setEnemyLocation();
+			e->setEnemyType(2);
+			e->setDefaultCoolTime(3.f);
+			break;
+		}
+		}
 	}
-
-	starSpownTimer++;
-	if (starSpownTimer > 50) {
-		starSpownTimer = 0;
-		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "sphere.obj1");
-		auto o = objManager.getObject<Star>(index);
-		o->setStarlocation();
-	}
-
 
 	objManager.update(eTime / 1000.f);
 

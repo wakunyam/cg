@@ -128,6 +128,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="file.cpp" />
+    <ClCompile Include="Item.cpp" />
     <ClCompile Include="loadObj.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="file.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="loadObj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Object.h" />
@@ -152,9 +154,15 @@
     <Object Include="enemy.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </Object>
+    <None Include="one.obj1">
+      <FileType>Document</FileType>
+    </None>
     <Object Include="plane.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </Object>
+    <None Include="two.obj1">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="boss.obj1">
@@ -170,6 +178,7 @@
     <None Include="plane.obj1">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
+    <None Include="sphere.obj1" />
     <None Include="vertex.glvs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

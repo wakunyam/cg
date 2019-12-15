@@ -73,7 +73,7 @@ void Object::update(float eTime)
 
 		// calculate friction size
 		float nForce = 9.8f * mass;
-		float frictionSize = 0.7f * nForce; // 마찰계수와 중력
+		float frictionSize = fric * nForce; // 마찰계수와 중력
 		vX = -vX * frictionSize;
 		vY = -vY * frictionSize;
 
@@ -207,6 +207,11 @@ void Object::getVel(float* x, float* y, float* z)
 	*x = velX;
 	*y = velY;
 	*z = velZ;
+}
+
+void Object::setFric(float fric)
+{
+	this->fric = fric;
 }
 
 void Object::setHp(int hp)

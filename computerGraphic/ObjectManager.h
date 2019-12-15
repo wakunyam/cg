@@ -4,6 +4,7 @@
 #include <list>
 #include "object.h"
 #include "Enemy.h"
+#include "Item.h"
 
 class objectManager
 {

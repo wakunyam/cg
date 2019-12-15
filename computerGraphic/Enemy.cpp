@@ -1,8 +1,6 @@
 #include "Enemy.h"
 #include <random>
 
-#define DEFAULT_SHOOT_COOLTIME 1.f
-
 Enemy::Enemy()
 {
 	revolution(90.f, 0.f, 0.f);
@@ -43,5 +41,20 @@ bool Enemy::canShoot()
 
 void Enemy::resetCoolTime()
 {
-	shootCoolTime = DEFAULT_SHOOT_COOLTIME;
+	shootCoolTime = defaultCoolTime;
+}
+
+void Enemy::setDefaultCoolTime(float c)
+{
+	defaultCoolTime = c;
+}
+
+int Enemy::getEnenyType()
+{
+	return enemyType;
+}
+
+void Enemy::setEnemyType(int t)
+{
+	enemyType = t;
 }
