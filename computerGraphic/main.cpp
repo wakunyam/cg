@@ -89,7 +89,7 @@ int main(int argc, char** argv) {
 		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "two.obj1");
 		auto o = objManager.getObject<Star>(index);
 	}
-	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
+	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "item.obj1");
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeyDown);
