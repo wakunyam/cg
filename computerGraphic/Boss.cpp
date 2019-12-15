@@ -51,18 +51,3 @@ void Boss::resetCoolTime()
 {
 	shootCoolTime = DEFAULT_SHOOT_COOLTIME;
 }
-
-BoundingBox Boss::getBoundingBox()
-{
-	BoundingBox b;
-
-	float x, y, z;
-	getPos(&x, &y, &z);
-
-	b.x1 = x - 15;
-	b.z1 = -z - 15;
-	b.x2 = x + 15;
-	b.z2 = -z + 15;
-
-	return b;
-}

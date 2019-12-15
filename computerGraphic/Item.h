@@ -1,6 +1,5 @@
 #pragma once
 #include "Object.h"
-#include "boundingBox.h"
 
 class Item : public Object
 {
@@ -10,6 +9,5 @@ public:
 	~Item() = default;
 	void update(float eTime) override;
 	float getRemainTime();
-	BoundingBox getBoundingBox();
 };
 

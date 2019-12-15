@@ -1,6 +1,5 @@
 #pragma once
 #include "Object.h"
-#include "boundingBox.h"
 
 class Boss : public Object
 {
@@ -18,5 +17,5 @@ public:
 	void update(float eTime) override;
 	bool canShoot();
 	void resetCoolTime();
-	BoundingBox getBoundingBox();
 };
+#pragma once

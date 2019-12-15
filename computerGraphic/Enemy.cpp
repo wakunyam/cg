@@ -63,18 +63,3 @@ void Enemy::setEnemyType(int t)
 {
 	enemyType = t;
 }
-
-BoundingBox Enemy::getBoundingBox()
-{
-	BoundingBox b;
-
-	float x, y, z;
-	getPos(&x, &y, &z);
-
-	b.x1 = x - 4;
-	b.x2 = x + 4;	
-	b.z1 = -z - 5;
-	b.z2 = -z + 5;
-
-	return b;
-}

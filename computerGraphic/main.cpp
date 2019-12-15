@@ -81,19 +81,15 @@ int main(int argc, char** argv) {
 
 	objManager.addObject<Player>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
 	auto o = objManager.getObject<Player>(HERO_ID);
-	o->setHp(5);
+
 	o->revolution(-90, 0, 0);
 	o->setPos(0, 0, -20);
 
 	for (int i = 0; i < 50; i++) {
 		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "two.obj1");
 		auto o = objManager.getObject<Star>(index);
-		o->setHp(1);
 	}
-	int itemIndex = objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, ITEM_TYPE, "item.obj1");
-	auto item = objManager.getObject<Item>(itemIndex);
-	item->setHp(1);
-
+	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "item.obj1");
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeyDown);
@@ -137,36 +133,33 @@ void Keyboard(unsigned char key, int x, int y)
 			player->getPos(&x, &y, &z);
 			if (player->getLevel() >= 3)
 			{
-				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
 				auto o = objManager.getObject<Object>(idx);
 				o->setVel(0.f, 50.f, 0.f);
 				o->setPos(x + 2.f, y, z + 3.f);
 				o->setParent(player);
 				o->setHp(10);
 				o->revolution(-90, 0, 0);
-				o->setColor(1, 1, 0);
 			}
 			if (player->getLevel() >= 2)
 			{
-				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
 				auto o = objManager.getObject<Object>(idx);
 				o->setVel(0.f, 50.f, 0.f);
 				o->setPos(x - 2.f, y, z + 3.f);
 				o->setParent(player);
 				o->setHp(10);
 				o->revolution(-90, 0, 0);
-				o->setColor(1, 1, 0);
 			}
 			if (player->getLevel() >= 1)
 			{
-				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
+				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, BULLET_TYPE, "bullet.obj1");
 				auto o = objManager.getObject<Object>(idx);
 				o->setVel(0.f, 50.f, 0.f);
 				o->setPos(x, y, z + 5.f);
 				o->setParent(player);
 				o->setHp(10);
 				o->revolution(-90, 0, 0);
-				o->setColor(1, 1, 0);
 			}
 		}
 		break;
@@ -278,8 +271,8 @@ void Timerfounction(int value)
 	}
 
 	bossTimer -= eTime / 1000.f;
-	//if (bossTimer > FLT_EPSILON)
-	//{
+	if (bossTimer > FLT_EPSILON)
+	{
 		enemySpawnTimer -= eTime / 1000.f;
 		if (enemySpawnTimer < FLT_EPSILON) {
 			enemySpawnTimer = ENEMY_SPAWN_TIME;
@@ -290,36 +283,31 @@ void Timerfounction(int value)
 				int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
 				auto e = objManager.getObject<Enemy>(idx);
 				e->setEnemyType(0);
-				e->setHp(5);
 				break;
 			}
 			case 1: {
 				int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
 				auto e = objManager.getObject<Enemy>(idx);
 				e->setEnemyType(1);
-				e->setHp(5);
 				break;
 			}
 			case 2: {
 				int idx = objManager.addObject<Enemy>(0, 0, 0, 1, 1, 1, 1, 1, 1, ENEMY_TYPE, "enemy.obj1");
 				auto e = objManager.getObject<Enemy>(idx);
 				e->setEnemyType(2);
-				e->setHp(5);
 				e->setDefaultCoolTime(3.f);
 				break;
 			}
 			}
 		}
-	//}
-	/*else
+	}
+	else
 	{
 		if (!bossState) {
 			bossState = true;
-			int idx =  objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "Boss.obj1");
-			auto boss = objManager.getObject<Boss>(idx);
-			boss->setHp(5);
+			objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "Boss.obj1");
 		}
-	}*/
+	}
 
 	objManager.update(eTime / 1000.f);
 

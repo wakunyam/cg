@@ -6,7 +6,6 @@
 #include "Enemy.h"
 #include "Boss.h"
 #include "Item.h"
-#include "Player.h"
 
 class objectManager
 {

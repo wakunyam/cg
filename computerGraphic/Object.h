@@ -12,8 +12,7 @@ enum type {
 	ENEMY_TYPE,
 	BOSS_TYPE,
 	STAR_TYPE,
-	ITEM_TYPE,
-	PLAYER_BULLET_TYPE
+	ITEM_TYPE
 };
 
 class Object
