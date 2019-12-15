@@ -59,10 +59,28 @@ void Player::plusLevel()
 
 void Player::resetLevel()
 {
-	level = 0;
+	level = 1;
 }
 
 int Player::getLevel()
 {
 	return level;
+}
+
+BoundingBox Player::getBoundingBox()
+{
+	BoundingBox b;
+
+	float x, y, z;
+	getPos(&x, &y, &z);
+
+	b.x1 = x - 4;
+	b.z1 = z - 4;
+	b.x2 = x + 4;
+	b.z2 = z + 4;
+
+	//std::cout << "Player" << std::endl;
+	//std::cout << b.x1 << " " << b.x2 << ", " << b.z1 << " " << b.z2 << std::endl;
+
+	return b;
 }

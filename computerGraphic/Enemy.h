@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "boundingBox.h"
 
 class Enemy : public Object
 {
@@ -20,4 +21,5 @@ public:
 	void setDefaultCoolTime(float c);
 	int getEnenyType();
 	void setEnemyType(int t);
+	BoundingBox getBoundingBox();
 };
