@@ -230,7 +230,6 @@ void objectManager::update(float eTime)
 			}
 		}
 		if (object->getType() == ITEM_TYPE) {
-			std::cout << 0 << std::endl;
 			auto item = getObject<Item>(idx);
 			auto player = getObject<Player>(HERO_ID);
 
