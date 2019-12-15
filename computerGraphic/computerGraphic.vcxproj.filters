@@ -149,5 +149,9 @@
       <Filter>소스 파일\objfile</Filter>
     </None>
     <None Include="one.obj1" />
+    <None Include="one.obj1" />
+    <None Include="item.obj1">
+      <Filter>소스 파일\objfile</Filter>
+    </None>
   </ItemGroup>
 </Project>

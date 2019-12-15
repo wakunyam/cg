@@ -57,3 +57,21 @@ float Item::getRemainTime()
 {
 	return remainTime;
 }
+
+BoundingBox Item::getBoundingBox()
+{
+	BoundingBox b;
+
+	float x, y, z;
+	getPos(&x, &y, &z);
+
+	b.x1 = -x - 2;
+	b.z1 = -y - 2;
+	b.x2 = -x + 2;
+	b.z2 = -y + 2;
+	
+	//std::cout << "Item" << std::endl;
+	//std::cout << b.x1 << " " << b.x2 << ", " << b.z1 << " " << b.z2 << std:: endl;
+
+	return b;
+}

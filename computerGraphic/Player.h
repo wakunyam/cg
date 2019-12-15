@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+#include "boundingBox.h"
 
 class Player : public Object
 {
@@ -17,5 +18,6 @@ public:
 	void plusLevel();
 	void resetLevel();
 	int getLevel();
+	BoundingBox getBoundingBox();
 };
 
