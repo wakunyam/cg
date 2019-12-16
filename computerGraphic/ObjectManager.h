@@ -8,6 +8,7 @@
 #include "Item.h"
 #include "Player.h"
 #include "BossBody.h"
+#include "Bomb.h"
 
 class objectManager
 {

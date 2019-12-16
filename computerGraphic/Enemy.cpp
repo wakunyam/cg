@@ -17,24 +17,36 @@ Enemy::Enemy()
 void Enemy::update(float eTime)
 {
 	Object::update(eTime);
-	shootCoolTime -= eTime;
-	
-	if (startY < stopY)
-		startY += 10 * eTime;
-	else {
-		x += (traverseDir * 10 * eTime);
-		
-		if (x < -35)
-			traverseDir = 1;
-		else if (x > 35)
-			traverseDir = -1;
+
+	if (!death) {
+		shootCoolTime -= eTime;
+
+		if (startY < stopY)
+			startY += 10 * eTime;
+		else {
+			x += (traverseDir * 10 * eTime);
+
+			if (x < -35)
+				traverseDir = 1;
+			else if (x > 35)
+				traverseDir = -1;
+		}
+
+		turn += eTime * 2;
+
+		setPos(x, 0, startY);
+
+		setRotate(0, 0, turn);
 	}
+	else {
+		setRotate(120, 0, 0);
+		z -= 10 * eTime;
+		startY += 5 * eTime;
+		setPos(x, z, startY);
 
-	turn += eTime * 2;
-
-	setPos(x, 0, startY);
-
-	setRotate(0, 0, turn);
+		if (z < -30)
+			setHp(0);
+	}
 }
 
 bool Enemy::canShoot()
@@ -62,6 +74,16 @@ int Enemy::getEnenyType()
 void Enemy::setEnemyType(int t)
 {
 	enemyType = t;
+}
+
+void Enemy::setDeath()
+{
+	death = true;
+}
+
+bool Enemy::getDeath() const
+{
+	return death;
 }
 
 BoundingBox Enemy::getBoundingBox()

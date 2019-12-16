@@ -13,23 +13,32 @@ Boss::Boss()
 void Boss::update(float eTime)
 {
 	Object::update(eTime);
-	shootCoolTime -= eTime;
 
-	if (startY < stopY)
-		startY += 10 * eTime;
-	else {
-		x += (traverseDir * 10 * eTime);
+	if (!death) {
+		shootCoolTime -= eTime;
 
-		if (x < -35)
-			traverseDir = 1;
-		else if (x > 35)
-			traverseDir = -1;
+		if (startY < stopY)
+			startY += 10 * eTime;
+		else {
+			x += (traverseDir * 10 * eTime);
+
+			if (x < -35)
+				traverseDir = 1;
+			else if (x > 35)
+				traverseDir = -1;
+		}
+		setPos(x, 0, startY);
 	}
+	else {
+		setRotate(120, 0, 0);
+		z -= 10 * eTime;
+		startY += 5 * eTime;
+		setPos(x, z, startY);
 
-	setPos(x, 0, startY);
+		if (z < -30)
+			setHp(0);
+	}
 }
-
-
 
 bool Boss::canShoot()
 {
@@ -41,6 +50,16 @@ bool Boss::canShoot()
 void Boss::resetCoolTime()
 {
 	shootCoolTime = DEFAULT_SHOOT_COOLTIME;
+}
+
+void Boss::setDeath()
+{
+	death = true;
+}
+
+bool Boss::getDeath() const
+{
+	return death;
 }
 
 BoundingBox Boss::getBoundingBox()

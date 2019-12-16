@@ -15,6 +15,7 @@ enum type {
 	STAR_TYPE,
 	ITEM_TYPE,
 	PLAYER_BULLET_TYPE,
+	BOMB_TYPE
 };
 
 class Object

@@ -12,22 +12,45 @@ void BossBody::update(float eTime)
 {
 	Object::update(eTime);
 
-	if (startY < stopY)
-		startY += 10 * eTime;
-	else {
-		x += (traverseDir * 10 * eTime);
+	
 
-		if (x < -35)
-			traverseDir = 1;
-		else if (x > 35)
-			traverseDir = -1;
+	if (!death) {
+		if (startY < stopY)
+			startY += 10 * eTime;
+		else {
+			x += (traverseDir * 10 * eTime);
+
+			if (x < -35)
+				traverseDir = 1;
+			else if (x > 35)
+				traverseDir = -1;
+		}
+
+		turn += eTime;
+
+		setPos(x, 0, startY);
+
+		setRotate(0, turn, 0);
 	}
+	else {
+		setRotate(120, 0, 0);
+		z -= 10 * eTime;
+		startY += 5 * eTime;
+		setPos(x, z, startY);
 
-	turn += eTime;
+		if (z < -30)
+			setHp(0);
+	}
+}
 
-	setPos(x, 0, startY);
+bool BossBody::getDeath() const
+{
+	return death;
+}
 
-	setRotate(0, turn, 0);
+void BossBody::setDeath()
+{
+	death = true;
 }
 
 BoundingBox BossBody::getBoundingBox()
