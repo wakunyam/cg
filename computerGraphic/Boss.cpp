@@ -1,6 +1,6 @@
 #include "Boss.h"
 
-#define DEFAULT_SHOOT_COOLTIME 1.f
+#define DEFAULT_SHOOT_COOLTIME 1.2f
 
 Boss::Boss()
 {

@@ -18,6 +18,7 @@ public:
 	void plusLevel();
 	void resetLevel();
 	int getLevel();
+	bool getEvasion() const;
 	BoundingBox getBoundingBox();
 };
 

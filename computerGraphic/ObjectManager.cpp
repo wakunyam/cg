@@ -113,10 +113,12 @@ void objectManager::update(float eTime)
 					bb.x2 = x_player + 5;
 					bb.z2 = z_player + 5;
 
-					if (collide(bb, enemy->getBoundingBox())) {
-						enemy->setHp(0);
-						player->resetLevel();;
-						break;
+					if (!player->getEvasion()) {
+						if (collide(bb, enemy->getBoundingBox())) {
+							enemy->setHp(0);
+							player->resetLevel();
+							break;
+						}
 					}
 				}
 				++sub_idx;
@@ -232,12 +234,12 @@ void objectManager::update(float eTime)
 			int sub_idx = 0;
 			for (auto& sub_object : objects) {
 				if (sub_object->getType() == BULLET_TYPE) {
-					if (!sub_object->isAncestor(player)) {
+					if (!player->getEvasion()) {
 						auto bullet = getObject<Object>(sub_idx);
 						if (bullet->getHp() > 0) {
 							float x_bullet, y_bullet, z_bullet;
 							bullet->getPos(&x_bullet, &y_bullet, &z_bullet);
-							
+
 							BoundingBox bb;
 
 							if (bullet->getHp() > 10) {

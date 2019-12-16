@@ -8,8 +8,8 @@ void Player::update(float eTime)
 	shootCoolTime -= eTime;
 	if (evasion)
 	{
-		turn += 360 * eTime;
-		if (turn > 360) {
+		turn += 180 * eTime;
+		if (turn > 90) {
 			setRotate(0.f, 0.f, 0.f);
 			turn = 0.f;
 			evasion = false;
@@ -65,6 +65,11 @@ void Player::resetLevel()
 int Player::getLevel()
 {
 	return level;
+}
+
+bool Player::getEvasion() const
+{
+	return evasion;
 }
 
 BoundingBox Player::getBoundingBox()

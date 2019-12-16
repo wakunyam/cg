@@ -19,6 +19,8 @@
 
 #define HERO_ID 0
 #define ENEMY_SPAWN_TIME 10.f
+#define ITEM_SPAWN_TIME 15.f
+#define BOSS_SPAWN_TIME 50.f
 
 GLvoid drawScene();
 GLvoid Reshape(int w, int h);
@@ -49,10 +51,11 @@ bool keyLeft = false;
 bool keyDown = false;
 bool keyRight = false;
 
-float enemySpawnTimer = ENEMY_SPAWN_TIME;
+float enemySpawnTimer = ENEMY_SPAWN_TIME / 2;
+float itemSpawnTimer = ITEM_SPAWN_TIME / 2;
 
 bool bossState = false;
-float bossTimer = 50.f;
+float bossTimer = BOSS_SPAWN_TIME;
 
 int main(int argc, char** argv) {
 
@@ -85,15 +88,13 @@ int main(int argc, char** argv) {
 	o->setHp(5);
 	o->revolution(-90, 0, 0);
 	o->setPos(0, 0, -20);
+	o->setColor(1, 0, 0);
 
 	for (int i = 0; i < 50; i++) {
 		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "two.obj1");
 		auto o = objManager.getObject<Star>(index);
 		o->setHp(1);
 	}
-	int itemIndex = objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, ITEM_TYPE, "item.obj1");
-	auto item = objManager.getObject<Item>(itemIndex);
-	item->setHp(1);
 
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
@@ -110,6 +111,7 @@ GLvoid drawScene() {
 	glEnable(GL_DEPTH_TEST);
 
 	glUseProgram(shaderprogram);
+
 	cameraSetting(shaderprogram, topView);
 	glUniform3fv(lightColorLocation, 1, glm::value_ptr(lightColor));
 	glUniform3fv(lightPosLocation, 1, glm::value_ptr(lightPos));
@@ -292,6 +294,7 @@ void Timerfounction(int value)
 				auto e = objManager.getObject<Enemy>(idx);
 				e->setEnemyType(0);
 				e->setHp(5);
+				e->setColor(0, 0.8, 0.3);
 				break;
 			}
 			case 1: {
@@ -299,6 +302,7 @@ void Timerfounction(int value)
 				auto e = objManager.getObject<Enemy>(idx);
 				e->setEnemyType(1);
 				e->setHp(5);
+				e->setColor(0, 0.8, 0.3);
 				break;
 			}
 			case 2: {
@@ -307,6 +311,7 @@ void Timerfounction(int value)
 				e->setEnemyType(2);
 				e->setHp(5);
 				e->setDefaultCoolTime(3.f);
+				e->setColor(0, 0.8, 0.3);
 				break;
 			}
 			}
@@ -319,10 +324,21 @@ void Timerfounction(int value)
 			int idx = objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "BossArm.obj1");
 			auto bossArm = objManager.getObject<Boss>(idx);		
 			bossArm->setHp(50);
+			bossArm->setColor(0.1, 0.7, 0.4);
 			idx = objManager.addObject<BossBody>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_BODY_TYPE, "BossBody.obj1");
 			auto bossBody = objManager.getObject<BossBody>(idx);
 			bossBody->setHp(50);
+			bossBody->setColor(0.1, 0.5, 0.3);
 		}
+	}
+
+	itemSpawnTimer -= eTime / 1000.f;
+	if (itemSpawnTimer < FLT_EPSILON) {
+		itemSpawnTimer = ITEM_SPAWN_TIME;
+		int idx = objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, ITEM_TYPE, "item.obj1");
+		auto item = objManager.getObject<Item>(idx);
+		item->setColor(1, 0, 0.5);
+		item->setHp(1);
 	}
 
 	objManager.update(eTime / 1000.f);
