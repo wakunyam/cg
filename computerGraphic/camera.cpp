@@ -15,7 +15,7 @@ void cameraSetting(GLuint shaderprogram, bool topView)
 		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 	else {
-		cameraPos = glm::vec3(0, 0 - 300.0f , 0);
+		cameraPos = glm::vec3(0, 0 -800.0f , 0);
 		cameraDirection = glm::vec3(0, 0, 0.0f);
 		cameraUp = glm::vec3(0.0f, 0.0f, 1.0f);
 	}

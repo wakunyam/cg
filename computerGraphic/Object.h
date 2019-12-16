@@ -15,6 +15,7 @@ enum type {
 	STAR_TYPE,
 	ITEM_TYPE,
 	PLAYER_BULLET_TYPE,
+	BOMB_TYPE
 };
 
 class Object
@@ -56,6 +57,7 @@ public:
 	void setRotate(float x, float y, float z);
 	void setIdx(int idx);
 	int getIdx();
+	void setAlpha(float alpha);
 	void setType(int type);
 	int getType();
 	void setParent(Object* parent);

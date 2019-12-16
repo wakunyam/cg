@@ -7,7 +7,7 @@ class Player : public Object
 	float shootCoolTime = 0.f;
 	bool evasion = false;
 	float turn = 0.f;
-	int level = 3;
+	int level = 1;
 public:
 	Player() = default;
 	~Player() = default;

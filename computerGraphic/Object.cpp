@@ -162,6 +162,11 @@ int Object::getIdx()
 	return idx;
 }
 
+void Object::setAlpha(float alpha)
+{
+	this->alpha = alpha;
+}
+
 void Object::setType(int type)
 {
 	this->type = type;

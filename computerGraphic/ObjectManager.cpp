@@ -333,10 +333,14 @@ void objectManager::update(float eTime)
 
 void objectManager::render(GLuint shaderProgram)
 {
-	for (const auto& object : objects)
+	auto it = objects.begin();
+	++it;
+	for (;it!=objects.end();++it)
 	{
-		object->render(shaderProgram);
+		(*it)->render(shaderProgram);
 	}
+	/*it = objects.begin();
+	(*it)->render(shaderProgram);*/
 }
 
 void objectManager::doGarbageColletion()

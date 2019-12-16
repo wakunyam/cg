@@ -16,6 +16,7 @@
 #include "Boss.h"
 #include "BossBody.h"
 #include "Item.h"
+#include "Bomb.h"
 
 #define HERO_ID 0
 #define ENEMY_SPAWN_TIME 10.f
@@ -96,6 +97,8 @@ int main(int argc, char** argv) {
 		o->setHp(1);
 	}
 
+	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, ITEM_TYPE, "item.obj1");
+
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeyDown);
@@ -121,6 +124,9 @@ GLvoid drawScene() {
 		glUniform3fv(viewPosLocation, 1, glm::value_ptr(backCameraPos));
 
 	objManager.render(shaderprogram);
+	auto o = objManager.getObject<Player>(HERO_ID);
+	o->render(shaderprogram);
+
 	glutSwapBuffers();  //  화면에 출력
 }
 
@@ -238,6 +244,8 @@ void SpecialKeyUp(int key, int x, int y)
 	if (key == GLUT_KEY_SHIFT_L)
 	{
 		topView = (topView + 1) % 2;
+		auto o = objManager.getObject<Player>(HERO_ID);
+		o->setAlpha(0.1f);
 	}
 }
 
@@ -248,7 +256,7 @@ void Timerfounction(int value)
 	prevTime = currTime;
 
 	float fx, fy, fz;
-	float fAmount = 10.f;
+	float fAmount = 20.f;
 	fx = fy = fz = 0.f;
 
 	if (keyUp)
