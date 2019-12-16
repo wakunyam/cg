@@ -7,6 +7,7 @@
 #include "Boss.h"
 #include "Item.h"
 #include "Player.h"
+#include "BossBody.h"
 
 class objectManager
 {

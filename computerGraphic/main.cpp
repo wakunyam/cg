@@ -14,6 +14,7 @@
 #include "Enemy.h"
 #include "Star.h"
 #include "Boss.h"
+#include "BossBody.h"
 #include "Item.h"
 
 #define HERO_ID 0
@@ -51,7 +52,7 @@ bool keyRight = false;
 float enemySpawnTimer = ENEMY_SPAWN_TIME;
 
 bool bossState = false;
-float bossTimer = 10.f;
+float bossTimer = 50.f;
 
 int main(int argc, char** argv) {
 
@@ -278,8 +279,8 @@ void Timerfounction(int value)
 	}
 
 	bossTimer -= eTime / 1000.f;
-	//if (bossTimer > FLT_EPSILON)
-	//{
+	if (bossTimer > FLT_EPSILON)
+	{
 		enemySpawnTimer -= eTime / 1000.f;
 		if (enemySpawnTimer < FLT_EPSILON) {
 			enemySpawnTimer = ENEMY_SPAWN_TIME;
@@ -310,16 +311,19 @@ void Timerfounction(int value)
 			}
 			}
 		}
-	//}
-	/*else
+	}
+	else
 	{
 		if (!bossState) {
 			bossState = true;
-			int idx =  objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "Boss.obj1");
-			auto boss = objManager.getObject<Boss>(idx);
-			boss->setHp(5);
+			int idx = objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "BossArm.obj1");
+			auto bossArm = objManager.getObject<Boss>(idx);		
+			bossArm->setHp(50);
+			idx = objManager.addObject<BossBody>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_BODY_TYPE, "BossBody.obj1");
+			auto bossBody = objManager.getObject<BossBody>(idx);
+			bossBody->setHp(50);
 		}
-	}*/
+	}
 
 	objManager.update(eTime / 1000.f);
 

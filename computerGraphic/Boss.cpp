@@ -10,11 +10,6 @@ Boss::Boss()
 	stopY = -20;
 }
 
-float Boss::getTurn() const
-{
-	return turn;
-}
-
 void Boss::update(float eTime)
 {
 	Object::update(eTime);
@@ -31,11 +26,7 @@ void Boss::update(float eTime)
 			traverseDir = -1;
 	}
 
-	turn += eTime;
-
 	setPos(x, 0, startY);
-
-	setRotate(0, turn, 0);
 }
 
 
@@ -60,9 +51,9 @@ BoundingBox Boss::getBoundingBox()
 	getPos(&x, &y, &z);
 
 	b.x1 = x - 15;
-	b.z1 = -z - 15;
+	b.z1 = -z - 10;
 	b.x2 = x + 15;
-	b.z2 = -z + 15;
+	b.z2 = -z + 10;
 
 	return b;
 }
