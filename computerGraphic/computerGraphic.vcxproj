@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Boss.cpp" />
     <ClCompile Include="boundingBox.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="Star.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="boundingBox.h" />
     <ClInclude Include="camera.h" />
@@ -153,9 +155,8 @@
     <ClInclude Include="Star.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="one.obj1">
-      <FileType>Document</FileType>
-    </None>
+    <None Include="bomb.obj" />
+    <None Include="item.obj1" />
     <None Include="two.obj1">
       <FileType>Document</FileType>
     </None>
@@ -171,9 +172,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="fragment.glfs" />
-    <None Include="one.obj1">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
     <None Include="plane.obj1">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>

@@ -15,6 +15,7 @@
 #include "Star.h"
 #include "Boss.h"
 #include "Item.h"
+#include "Bomb.h"
 
 #define HERO_ID 0
 #define ENEMY_SPAWN_TIME 10.f
@@ -81,15 +82,16 @@ int main(int argc, char** argv) {
 
 	objManager.addObject<Player>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "plane.obj1");
 	auto o = objManager.getObject<Player>(HERO_ID);
-
 	o->revolution(-90, 0, 0);
 	o->setPos(0, 0, -20);
+
+	objManager.addObject<Bomb>(0, 0, 0, 1, 1, 1, 1, 1, 1, BOMB_TYPE, "bomb.obj1");
 
 	for (int i = 0; i < 50; i++) {
 		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "two.obj1");
 		auto o = objManager.getObject<Star>(index);
 	}
-	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, PLAYER_TYPE, "item.obj1");
+	objManager.addObject<Item>(0, 0, 0, 1, 1, 1, 1, 1, 1, ITEM_TYPE, "item.obj1");
 	glutDisplayFunc(drawScene);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeyDown);
