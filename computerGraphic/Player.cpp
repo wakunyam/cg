@@ -8,14 +8,27 @@ void Player::update(float eTime)
 	shootCoolTime -= eTime;
 	if (evasion)
 	{
-		turn += 180 * eTime;
-		if (turn > 90) {
-			setRotate(0.f, 0.f, 0.f);
-			turn = 0.f;
-			evasion = false;
+		if (!death) {
+			turn += 180 * eTime;
+			if (turn > 90) {
+				setRotate(0.f, 0.f, 0.f);
+				turn = 0.f;
+				evasion = false;
+			}
+			else
+				setRotate(0.f, 0.f, turn);
 		}
-		else
-			setRotate(0.f, 0.f, turn);
+		else {
+			deathTurn += 360 * eTime;
+			if (deathTurn > 360) {
+				setRotate(0.f, 0.f, 0.f);
+				deathTurn = 0.f;
+				evasion = false;
+				respone();
+			}
+			else
+				setRotate(deathTurn, 0, 0);
+		}
 	}
 	float x, y, z;
 	getPos(&x, &y, &z);
@@ -27,6 +40,7 @@ void Player::update(float eTime)
 		z = -47.f;
 	else if (z > 47.f)
 		z = 47.f;
+
 	setPos(x, y, z);
 }
 
@@ -72,6 +86,24 @@ bool Player::getEvasion() const
 	return evasion;
 }
 
+void Player::setDeath()
+{
+	death = true;
+	evasion = true;
+}
+
+bool Player::getDeath() const
+{
+	return death;
+}
+
+void Player::respone()
+{
+	death = false;
+	evasion = false;
+	resetLevel();
+}
+
 BoundingBox Player::getBoundingBox()
 {
 	BoundingBox b;
@@ -83,9 +115,6 @@ BoundingBox Player::getBoundingBox()
 	b.z1 = z - 4;
 	b.x2 = x + 4;
 	b.z2 = z + 4;
-
-	//std::cout << "Player" << std::endl;
-	//std::cout << b.x1 << " " << b.x2 << ", " << b.z1 << " " << b.z2 << std::endl;
 
 	return b;
 }

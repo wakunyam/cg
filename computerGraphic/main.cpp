@@ -22,6 +22,7 @@
 #define ENEMY_SPAWN_TIME 10.f
 #define ITEM_SPAWN_TIME 15.f
 #define BOSS_SPAWN_TIME 50.f
+#define END_DELAY 5.0f
 
 GLvoid drawScene();
 GLvoid Reshape(int w, int h);
@@ -58,6 +59,9 @@ float itemSpawnTimer = ITEM_SPAWN_TIME / 2;
 bool bossState = false;
 float bossTimer = BOSS_SPAWN_TIME;
 
+bool endState = false;
+float endTimer = END_DELAY;
+
 int main(int argc, char** argv) {
 
 	// 윈도우 생성
@@ -90,6 +94,8 @@ int main(int argc, char** argv) {
 	o->revolution(-90, 0, 0);
 	o->setPos(0, 0, -20);
 	o->setColor(1, 0, 0);
+
+	objManager.addObject<Bomb>(0, 0, 0, 1, 1, 1, 1, 1, 1, BOMB_TYPE, "boss.obj1");
 
 	for (int i = 0; i < 50; i++) {
 		int index = objManager.addObject<Star>(0, 0, 0, 1, 1, 1, 1, 1, 1, STAR_TYPE, "two.obj1");
@@ -139,43 +145,45 @@ void Keyboard(unsigned char key, int x, int y)
 	switch (key) {
 	case 's': {
 		auto player = objManager.getObject<Player>(HERO_ID);
-		if (player->canShoot())
-		{
-			player->resetCoolTime();
-			float x, y, z;
-			player->getPos(&x, &y, &z);
-			if (player->getLevel() >= 3)
+		if (!player->getDeath()) {
+			if (player->canShoot())
 			{
-				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
-				auto o = objManager.getObject<Object>(idx);
-				o->setVel(0.f, 50.f, 0.f);
-				o->setPos(x + 2.f, y, z + 3.f);
-				o->setParent(player);
-				o->setHp(10);
-				o->revolution(-90, 0, 0);
-				o->setColor(1, 1, 0);
-			}
-			if (player->getLevel() >= 2)
-			{
-				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
-				auto o = objManager.getObject<Object>(idx);
-				o->setVel(0.f, 50.f, 0.f);
-				o->setPos(x - 2.f, y, z + 3.f);
-				o->setParent(player);
-				o->setHp(10);
-				o->revolution(-90, 0, 0);
-				o->setColor(1, 1, 0);
-			}
-			if (player->getLevel() >= 1)
-			{
-				int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
-				auto o = objManager.getObject<Object>(idx);
-				o->setVel(0.f, 50.f, 0.f);
-				o->setPos(x, y, z + 5.f);
-				o->setParent(player);
-				o->setHp(10);
-				o->revolution(-90, 0, 0);
-				o->setColor(1, 1, 0);
+				player->resetCoolTime();
+				float x, y, z;
+				player->getPos(&x, &y, &z);
+				if (player->getLevel() >= 3)
+				{
+					int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
+					auto o = objManager.getObject<Object>(idx);
+					o->setVel(0.f, 50.f, 0.f);
+					o->setPos(x + 2.f, y, z + 3.f);
+					o->setParent(player);
+					o->setHp(10);
+					o->revolution(-90, 0, 0);
+					o->setColor(1, 1, 0);
+				}
+				if (player->getLevel() >= 2)
+				{
+					int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
+					auto o = objManager.getObject<Object>(idx);
+					o->setVel(0.f, 50.f, 0.f);
+					o->setPos(x - 2.f, y, z + 3.f);
+					o->setParent(player);
+					o->setHp(10);
+					o->revolution(-90, 0, 0);
+					o->setColor(1, 1, 0);
+				}
+				if (player->getLevel() >= 1)
+				{
+					int idx = objManager.addObject<Object>(0, 0, 0, 0.7f, 0.7f, 0.7f, 1, 1, 1, PLAYER_BULLET_TYPE, "bullet.obj1");
+					auto o = objManager.getObject<Object>(idx);
+					o->setVel(0.f, 50.f, 0.f);
+					o->setPos(x, y, z + 5.f);
+					o->setParent(player);
+					o->setHp(10);
+					o->revolution(-90, 0, 0);
+					o->setColor(1, 1, 0);
+				}
 			}
 		}
 		break;
@@ -196,9 +204,6 @@ void Keyboard(unsigned char key, int x, int y)
 		player->evade();
 		break;
 	}
-	case 'q':
-		glutLeaveMainLoop();
-		break;
 	}
 	glutPostRedisplay();
 }
@@ -259,23 +264,25 @@ void Timerfounction(int value)
 	float fAmount = 20.f;
 	fx = fy = fz = 0.f;
 
-	if (keyUp)
-	{
-		fy += 1.f;
+	auto player = objManager.getObject<Player>(HERO_ID);
+	if (!player->getDeath()) {
+		if (keyUp)
+		{
+			fy += 1.f;
+		}
+		if (keyDown)
+		{
+			fy -= 1.f;
+		}
+		if (keyLeft)
+		{
+			fx -= 1.f;
+		}
+		if (keyRight)
+		{
+			fx += 1.f;
+		}
 	}
-	if (keyDown)
-	{
-		fy -= 1.f;
-	}
-	if (keyLeft)
-	{
-		fx -= 1.f;
-	}
-	if (keyRight)
-	{
-		fx += 1.f;
-	}
-
 	float fSize = sqrtf(fx * fx + fy * fy);
 	if (fSize > FLT_EPSILON) {
 		fx /= fSize;
@@ -331,11 +338,11 @@ void Timerfounction(int value)
 			bossState = true;
 			int idx = objManager.addObject<Boss>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_TYPE, "BossArm.obj1");
 			auto bossArm = objManager.getObject<Boss>(idx);		
-			bossArm->setHp(50);
+			bossArm->setHp(30);
 			bossArm->setColor(0.1, 0.7, 0.4);
 			idx = objManager.addObject<BossBody>(0, 0, 0, 5, 5, 5, 1, 1, 1, BOSS_BODY_TYPE, "BossBody.obj1");
 			auto bossBody = objManager.getObject<BossBody>(idx);
-			bossBody->setHp(50);
+			bossBody->setHp(10);
 			bossBody->setColor(0.1, 0.5, 0.3);
 		}
 	}
@@ -347,6 +354,13 @@ void Timerfounction(int value)
 		auto item = objManager.getObject<Item>(idx);
 		item->setColor(1, 0, 0.5);
 		item->setHp(1);
+	}
+
+	if (endState) {
+		endTimer -= eTime / 1000.f;
+		if (endTimer < FLT_EPSILON) {
+			glutLeaveMainLoop();
+		}
 	}
 
 	objManager.update(eTime / 1000.f);

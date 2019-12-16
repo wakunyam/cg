@@ -3,6 +3,8 @@
 
 #define HERO_ID 0
 
+extern bool endState;
+
 void objectManager::update(float eTime)
 {
 	int idx = 0;
@@ -93,11 +95,16 @@ void objectManager::update(float eTime)
 						bb.x2 = x_bullet + 1;
 						bb.z2 = z_bullet + 2;
 
-						if (collide(bb, enemy->getBoundingBox())) {
-							enemy->manageHp(1);
-							playerBullet->setHp(0);
-							if (enemy->getHp() <= 0)
-								break;
+						if (!enemy->getDeath()) {
+							if (collide(bb, enemy->getBoundingBox())) {
+								enemy->manageHp(1);
+								playerBullet->setHp(0);
+								if (enemy->getHp() <= 0) {
+									enemy->setDeath();
+									enemy->setHp(1);
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -112,12 +119,16 @@ void objectManager::update(float eTime)
 					bb.z1 = z_player - 5;
 					bb.x2 = x_player + 5;
 					bb.z2 = z_player + 5;
-
-					if (!player->getEvasion()) {
-						if (collide(bb, enemy->getBoundingBox())) {
-							enemy->setHp(0);
-							player->resetLevel();
-							break;
+					if (!enemy->getDeath()) {
+						if (!player->getDeath()) {
+							if (!player->getEvasion()) {
+								if (collide(bb, enemy->getBoundingBox())) {
+									enemy->setDeath();
+									player->setDeath();
+									player->setHp(5);
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -200,11 +211,16 @@ void objectManager::update(float eTime)
 						bb.x2 = x_bullet + 1;
 						bb.z2 = z_bullet + 2;
 
-						if (collide(bb, boss->getBoundingBox())) {
-							boss->manageHp(1);
-							playerBullet->setHp(0);
-							if (boss->getHp() <= 0)
-								break;
+						if (!boss->getDeath()) {
+							if (collide(bb, boss->getBoundingBox())) {
+								boss->manageHp(1);
+								playerBullet->setHp(0);
+								if (boss->getHp() <= 0) {
+									boss->setDeath();
+									boss->setHp(1);
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -220,9 +236,12 @@ void objectManager::update(float eTime)
 					bb.x2 = x_player + 5;
 					bb.z2 = z_player + 5;
 
-					if (collide(bb, boss->getBoundingBox())) {
-						player->resetLevel();
-						break;
+					if (!player->getDeath()) {
+						if (collide(bb, boss->getBoundingBox())) {
+							player->setDeath();
+							player->setHp(5);
+							break;
+						}
 					}
 				}
 				++sub_idx;
@@ -254,16 +273,18 @@ void objectManager::update(float eTime)
 								bb.x2 = x_bullet + 1;
 								bb.z2 = -z_bullet + 2;
 							}
+							if (!player->getDeath()) {
+								if (collide(bb, player->getBoundingBox())) {
+									if (bullet->getHp() > 10)
+										player->manageHp(2);
+									else
+										player->manageHp(1);
+									bullet->setHp(0);
 
-							if (collide(bb, player->getBoundingBox())) {
-								if (bullet->getHp() > 10)
-									player->manageHp(2);
-								else
-									player->manageHp(1);
-								bullet->setHp(0);
-								if (player->getHp() <= 0) {
-									player->resetLevel();
-									player->setHp(5);
+									if (player->getHp() <= 0) {
+										player->setDeath();
+										player->setHp(5);
+									}
 								}
 							}
 						}
@@ -299,11 +320,17 @@ void objectManager::update(float eTime)
 						bb.x2 = x_bullet + 1;
 						bb.z2 = z_bullet + 2;
 
-						if (collide(bb, bossBody->getBoundingBox())) {
-							bossBody->manageHp(1);
-							playerBullet->setHp(0);
-							if (bossBody->getHp() <= 0)
-								break;
+						if (!bossBody->getDeath()) {
+							if (collide(bb, bossBody->getBoundingBox())) {
+								bossBody->manageHp(1);
+								playerBullet->setHp(0);
+								if (bossBody->getHp() <= 0) {
+									bossBody->setDeath();
+									endState = true;
+									bossBody->setHp(1);
+									break;
+								}
+							}
 						}
 					}
 				}
@@ -319,9 +346,12 @@ void objectManager::update(float eTime)
 					bb.x2 = x_player + 5;
 					bb.z2 = z_player + 5;
 
-					if (collide(bb, bossBody->getBoundingBox())) {
-						player->resetLevel();
-						break;
+					if (!player->getDeath()) {
+						if (collide(bb, bossBody->getBoundingBox())) {
+							player->setDeath();
+							player->setHp(5);
+							break;
+						}
 					}
 				}
 				++sub_idx;
@@ -374,7 +404,6 @@ void objectManager::doGarbageColletion()
 				objects.erase(it++);
 				continue;
 			}
-			int hp;
 			if ((*it)->getHp() < FLT_EPSILON)
 			{
 				(*it) = nullptr;

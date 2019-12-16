@@ -12,6 +12,9 @@ class Enemy : public Object
 	float stopY;
 	float traverseDir = -1;
 	int enemyType;
+	bool death = false;
+	float z = 0;
+
 public:
 	Enemy();
 	~Enemy() = default;
@@ -21,5 +24,7 @@ public:
 	void setDefaultCoolTime(float c);
 	int getEnenyType();
 	void setEnemyType(int t);
+	void setDeath();
+	bool getDeath() const;
 	BoundingBox getBoundingBox();
 };

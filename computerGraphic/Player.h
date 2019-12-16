@@ -8,6 +8,9 @@ class Player : public Object
 	bool evasion = false;
 	float turn = 0.f;
 	int level = 1;
+	bool death = false;
+	float deathTurn = 0;
+
 public:
 	Player() = default;
 	~Player() = default;
@@ -19,6 +22,9 @@ public:
 	void resetLevel();
 	int getLevel();
 	bool getEvasion() const;
+	void setDeath();
+	bool getDeath() const;
+	void respone();
 	BoundingBox getBoundingBox();
 };
 

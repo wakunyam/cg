@@ -81,10 +81,10 @@
     <ClCompile Include="Item.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
-    <ClCompile Include="Bomb.cpp">
+    <ClCompile Include="BossBody.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
-    <ClCompile Include="BossBody.cpp">
+    <ClCompile Include="Bomb.cpp">
       <Filter>소스 파일\Object</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,10 +125,10 @@
     <ClInclude Include="Item.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h">
+    <ClInclude Include="BossBody.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
-    <ClInclude Include="BossBody.h">
+    <ClInclude Include="Bomb.h">
       <Filter>소스 파일\Object</Filter>
     </ClInclude>
   </ItemGroup>
@@ -166,6 +166,13 @@
     <None Include="one.obj1">
       <Filter>소스 파일\objfile</Filter>
     </None>
+    <None Include="bossBody.obj1">
+      <Filter>소스 파일\objfile</Filter>
+    </None>
+    <None Include="bossArm.obj1">
+      <Filter>소스 파일\objfile</Filter>
+    </None>
+    <None Include="one.obj1" />
     <None Include="bossBody.obj1">
       <Filter>소스 파일\objfile</Filter>
     </None>

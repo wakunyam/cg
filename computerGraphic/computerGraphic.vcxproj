@@ -157,13 +157,13 @@
     <ClInclude Include="Star.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bossArm.obj1" />
-    <None Include="bossBody.obj1" />
-    <None Include="item.obj1">
+    <None Include="bossArm.obj1">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
-    <None Include="one.obj1">
-      <FileType>Document</FileType>
+    <None Include="bossBody.obj1">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="item.obj1">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="bomb.obj" />
@@ -184,9 +184,6 @@
     </None>
     <None Include="fragment.glfs" />
     <None Include="plane.obj1">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </None>
-    <None Include="sphere.obj1">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="vertex.glvs" />
